@@ -562,16 +562,16 @@ const CatPhishApp: React.FC = () => {
                 )}
 
                 {screen === AppScreen.SETUP_QUESTIONS && (
-                    <div className="min-h-screen bg-slate-900 text-white p-8 flex flex-col items-center justify-center overflow-hidden">
+                    <div className="min-h-screen bg-gradient-to-br from-orange-500 to-red-600 text-white p-8 flex flex-col items-center justify-center overflow-hidden">
                         <header className="absolute top-8 left-8 right-8 flex justify-between items-center">
-                            <span className="text-[10px] font-black uppercase tracking-widest text-orange-500">Day {currentDay} Protocol {currentQuestionInDayIndex + 1}/5</span>
-                            <div className="h-1 w-32 bg-white/10 rounded-full overflow-hidden"><div className="h-full bg-orange-600 transition-all duration-500" style={{ width: `${((currentQuestionInDayIndex + 1) / 5) * 100}%` }} /></div>
+                            <span className="text-[10px] font-black uppercase tracking-widest text-white/80">Day {currentDay} Protocol {currentQuestionInDayIndex + 1}/5</span>
+                            <div className="h-1 w-32 bg-black/20 rounded-full overflow-hidden"><div className="h-full bg-white transition-all duration-500" style={{ width: `${((currentQuestionInDayIndex + 1) / 5) * 100}%` }} /></div>
                         </header>
                         <div className="w-full space-y-12 animate-in zoom-in-95 duration-500">
                             <h3 className="text-4xl font-black italic tracking-tighter leading-tight text-center px-4 text-white">"{currentQuestion?.text}"</h3>
                             <div className="grid gap-4 w-full">
                                 {currentQuestion?.options.map(opt => (
-                                    <button key={opt.id} onClick={() => handleChoice(opt.id)} className="w-full p-6 rounded-[2rem] bg-white/5 border border-white/10 hover:border-orange-500 text-left font-bold transition-all active:scale-95 hover:bg-white/10 text-white">
+                                    <button key={opt.id} onClick={() => handleChoice(opt.id)} className="w-full p-6 rounded-[2rem] bg-white/10 border border-white/20 hover:border-white text-left font-bold transition-all active:scale-95 hover:bg-white/20 text-white shadow-lg backdrop-blur-md">
                                         {opt.text}
                                     </button>
                                 ))}
@@ -584,20 +584,20 @@ const CatPhishApp: React.FC = () => {
                 {screen === AppScreen.DAILY_DASHBOARD && renderDashboard()}
 
                 {screen === AppScreen.FREQUENCY_REPORT && (
-                    <div className="min-h-screen bg-slate-900 text-white p-8 flex flex-col overflow-y-auto">
+                    <div className="min-h-screen bg-gradient-to-br from-orange-500 to-red-600 text-white p-8 flex flex-col overflow-y-auto">
                         <header className="flex justify-between items-center mb-10">
-                            <h2 className="text-2xl font-black italic text-orange-600">Day {currentDay} Report</h2>
-                            <span className="text-[10px] font-black uppercase tracking-widest bg-white/10 px-4 py-2 rounded-full border border-white/10 text-white">Synchronized</span>
+                            <h2 className="text-2xl font-black italic text-white">Day {currentDay} Report</h2>
+                            <span className="text-[10px] font-black uppercase tracking-widest bg-white/20 px-4 py-2 rounded-full border border-white/20 text-white backdrop-blur-md">Synchronized</span>
                         </header>
                         <div className="flex-1 space-y-10 animate-in fade-in slide-in-from-bottom-6 duration-700">
                             <div className="space-y-4 text-white">
-                                <span className="text-[10px] font-black uppercase text-orange-500 tracking-[0.4em]">Subconscious Archetype</span>
-                                <h3 className="text-5xl font-black italic tracking-tighter leading-none text-white">{analysisHistory[currentDay - 1]?.archetype}</h3>
-                                <p className="text-white/60 text-lg leading-relaxed">{analysisHistory[currentDay - 1]?.summary}</p>
+                                <span className="text-[10px] font-black uppercase text-white/60 tracking-[0.4em]">Subconscious Archetype</span>
+                                <h3 className="text-5xl font-black italic tracking-tighter leading-none text-white drop-shadow-md">{analysisHistory[currentDay - 1]?.archetype}</h3>
+                                <p className="text-white/80 text-lg leading-relaxed">{analysisHistory[currentDay - 1]?.summary}</p>
                             </div>
                             <div className="grid gap-6">
-                                <div className="bg-white/5 p-8 rounded-[3rem] border border-white/10 space-y-4">
-                                    <span className="text-[10px] font-black uppercase tracking-widest opacity-40 text-white">Subconscious Search</span>
+                                <div className="bg-white/10 p-8 rounded-[3rem] border border-white/20 space-y-4 shadow-xl backdrop-blur-md">
+                                    <span className="text-[10px] font-black uppercase tracking-widest opacity-60 text-white">Subconscious Search</span>
                                     <p className="font-bold text-xl leading-tight text-white">"{analysisHistory[currentDay - 1]?.seeking}"</p>
                                 </div>
                                 <div className="bg-orange-600/10 p-8 rounded-[3rem] border border-orange-600/20 space-y-4">
