@@ -12,6 +12,7 @@ import { doc, setDoc, getDoc } from "firebase/firestore";
 import { db } from '../lib/firebase';
 
 const STORAGE_KEY = 'CATPHISH_V1_STATE';
+const ENABLE_CLOUD_SYNC = false; // Set to true if Firestore Rules allow public access
 
 const LoadingOverlay: React.FC<{
     text: string;
@@ -78,25 +79,29 @@ const CatPhishApp: React.FC = () => {
                 try {
                     const data = JSON.parse(saved);
                     if (data.currentUser?.id) {
-                        const docRef = doc(db, "users", data.currentUser.id);
-                        const docSnap = await getDoc(docRef);
+                        if (ENABLE_CLOUD_SYNC) {
+                            const docRef = doc(db, "users", data.currentUser.id);
+                            const docSnap = await getDoc(docRef);
 
-                        if (docSnap.exists()) {
-                            const cloudData = docSnap.data();
-                            setCurrentUser(cloudData.profile);
-                            setUserAnswers(cloudData.answers || {});
-                            setAnalysisHistory(cloudData.analysis || []);
-                            setCurrentDay(cloudData.currentDay || 1);
-                            setRevealedIds(new Set(cloudData.revealedIds || []));
-                            setConnectedIds(new Set(cloudData.connectedIds || []));
-                            setScreen(AppScreen.DAILY_DASHBOARD);
-                        } else {
-                            setCurrentUser(data.currentUser);
-                            setUserAnswers(data.userAnswers || {});
-                            setAnalysisHistory(data.analysisHistory || []);
-                            setCurrentDay(data.currentDay || 1);
-                            setScreen(AppScreen.DAILY_DASHBOARD);
+                            if (docSnap.exists()) {
+                                const cloudData = docSnap.data();
+                                setCurrentUser(cloudData.profile);
+                                setUserAnswers(cloudData.answers || {});
+                                setAnalysisHistory(cloudData.analysis || []);
+                                setCurrentDay(cloudData.currentDay || 1);
+                                setRevealedIds(new Set(cloudData.revealedIds || []));
+                                setConnectedIds(new Set(cloudData.connectedIds || []));
+                                setScreen(AppScreen.DAILY_DASHBOARD);
+                                return;
+                            }
                         }
+
+                        // Local Fallback
+                        setCurrentUser(data.currentUser);
+                        setUserAnswers(data.userAnswers || {});
+                        setAnalysisHistory(data.analysisHistory || []);
+                        setCurrentDay(data.currentDay || 1);
+                        setScreen(AppScreen.DAILY_DASHBOARD);
                     }
                 } catch (e) { console.error("Restore Failed", e); }
             }
@@ -108,15 +113,17 @@ const CatPhishApp: React.FC = () => {
         if (currentUser?.id) {
             const syncToCloud = async () => {
                 try {
-                    await setDoc(doc(db, "users", currentUser.id), {
-                        profile: currentUser,
-                        answers: userAnswers,
-                        analysis: analysisHistory,
-                        currentDay,
-                        revealedIds: Array.from(revealedIds),
-                        connectedIds: Array.from(connectedIds),
-                        lastActive: new Date().toISOString()
-                    }, { merge: true });
+                    if (ENABLE_CLOUD_SYNC) {
+                        await setDoc(doc(db, "users", currentUser.id), {
+                            profile: currentUser,
+                            answers: userAnswers,
+                            analysis: analysisHistory,
+                            currentDay,
+                            revealedIds: Array.from(revealedIds),
+                            connectedIds: Array.from(connectedIds),
+                            lastActive: new Date().toISOString()
+                        }, { merge: true });
+                    }
 
                     localStorage.setItem(STORAGE_KEY, JSON.stringify({
                         currentUser, userAnswers, analysisHistory, currentDay
@@ -421,6 +428,16 @@ const CatPhishApp: React.FC = () => {
                         <h1 className="text-8xl font-black mb-6 tracking-tighter italic leading-none text-white">CatPhish</h1>
                         <div className="bg-white/10 backdrop-blur-xl p-10 rounded-[2.5rem] border border-white/20 mb-14 max-w-sm"><p className="text-xl font-black italic leading-tight text-white">No swiping. Complete the 21-point protocol over 3 days to reveal your subconscious frequency.</p></div>
                         <button onClick={handleEnter} className="bg-white text-orange-600 w-full max-w-xs py-7 rounded-full font-black text-2xl shadow-2xl hover:scale-105 transition-all mb-4 uppercase active:scale-95">Enter Experiment</button>
+                        <button onClick={() => {
+                            setSetupData(prev => ({ ...prev, catName: "Debug Kitty", realName: "Tester", coreTruth: "Seeking a partner in absolute chaos" }));
+                            setCurrentUser({
+                                id: 'u_debug', displayName: "Debug Kitty", realName: "Tester", dob: "1990-01-01", phoneNumber: "+15555555555",
+                                gender: "Nb", location: "Void", bio: "Debug Mode", interests: ["Coding"], religion: "Data", sexualOrientation: "Any",
+                                wantsKids: "No", smokingStatus: "No", humanPhotoUrl: "https://placekitten.com/200/200", catPhotoUrl: "https://placekitten.com/200/200",
+                                irisColor: "Green", dailyStreak: 0, questions: [], coreTruth: "Seeking a partner in absolute chaos", traitAnswers: []
+                            });
+                            setScreen(AppScreen.SETUP_QUESTIONS);
+                        }} className="text-white/40 font-black uppercase text-[9px] tracking-widest hover:text-white transition-colors mb-2">DEBUG: SKIP TO GAMEPLAY</button>
                         <button onClick={() => setScreen(AppScreen.ABOUT)} className="text-white/60 font-black uppercase text-[10px] tracking-widest hover:text-white transition-colors">About the Protocol</button>
                     </div>
                 )}

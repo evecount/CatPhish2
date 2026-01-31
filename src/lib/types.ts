@@ -80,3 +80,16 @@ export interface FrequencyInsight {
     shadow: string;
     consultantNote?: string;
 }
+
+export enum AppScreen {
+    LANDING = 'LANDING',
+    ABOUT = 'ABOUT',
+    SETUP_BASICS = 'SETUP_BASICS',
+    SETUP_PICK_CAT = 'SETUP_PICK_CAT',
+    SETUP_DETAILS = 'SETUP_DETAILS',
+    SETUP_QUESTIONS = 'SETUP_QUESTIONS',
+    DAILY_DASHBOARD = 'DAILY_DASHBOARD',
+    FREQUENCY_REPORT = 'FREQUENCY_REPORT',
+    STATS_BOARD = 'STATS_BOARD',
+    EDIT_PROFILE = 'EDIT_PROFILE'
+}
