@@ -12,26 +12,41 @@ Cat-Phish.com utilizes a Zero Trust framework to verify users. Using Gemini 3’
 
 Cat-Phish.com effectively neutralizes automated "romantic script" bots by requiring perspective-shifting responses that AI cannot yet mimic. It turns the Alice/Bob/Eve triad into a security feature, using an internal "Eve" agent to audit conversation consistency. The result is a lighter-hearted app with a serious mission: proving that cybersecurity fundamentals like Behavioral Biometrics and MitM defense are the future of digital social trust.
 
-## 🧪 Testing & Demo Instructions
+## 🧪 How to Play (The 3-Day Experiment)
 
-To verify the core "Trust Engine" logic without creating a full account:
+This isn't a normal app. It's a 3-day experiment in finding your subconscious "vibe." Here's how to experience it:
 
-1. **Launch the App**:
+### Lurker Mode: Explore the Pool (2 Minutes)
 
-    ```bash
-    npm run dev
-    # Access at http://localhost:3000
-    ```
+Want to see the core matching engine without creating a profile? Enter as a guest.
 
-2. **Debug / Fast-Track Mode**:
-    * On the **Landing Page**, look for the small text button: **"DEBUG: SKIP TO GAMEPLAY"**.
-    * Clicking this bypasses the photo upload/transformation step (which requires a valid API key and file interaction).
-    * It instantly logs you in as a "Debug Tester" allowing you to immediately experience the **Day 1 Protocol** questions.
+1.  **Launch the App & Enter Lurker Mode**
+    *   Run the app and on the landing page, click the **"Lurker Mode"** button.
+    *   This bypasses the entire photo setup and lets you explore the app as a guest.
 
-3. **Insight Engine Verification**:
-    * Answer the 5 daily questions (randomly or thoughtfully).
-    * Verify that the **Frequency Report** generates a "Consultant Note" (yellow post-it) analyzing your choices.
-    * Proceed to the **Dashboard** to see matching logic in action.
+2.  **Enter the Protocol**
+    *   You are now on the main dashboard. The app will tell you it's time to begin the **Day 1 Protocol**. Click **"Begin Day 1 Probe"**.
+    *   You will be presented with 5 strange, multiple-choice questions. There are no right answers. Answer with your gut.
+
+3.  **Receive Your Diagnosis**
+    *   After the 5th question, the AI "Insight Engine" will analyze your choices.
+    *   You'll receive a **Frequency Report**: your subconscious **Archetype**, what you're truly **Seeking**, and your hidden **Dating Shadow**.
+    *   It's like a personality test, but for your soul.
+
+4.  **Explore the "Resonant Pool"**
+    *   Click **"View Resonant Pool"**.
+    *   You'll see a grid of other players (as cat avatars), ranked by how well their "vibe" matches yours.
+    *   The journey continues for two more days, with the matches getting more accurate each day.
+
+### The Full "CatPhish" Experience (As Intended)
+
+To play the game as designed:
+
+1.  Click **"Enter Experiment"** and follow the onboarding flow.
+2.  Upload 3 selfies (don't worry, no one will see them yet).
+3.  The AI will transform you into a "Feline Proxy." Pick your favorite.
+4.  Begin the 3-day protocol, answering 5 questions each day.
+5.  On Day 3, the human photos of your best matches are revealed.
 
 ## ⚙️ Configuration Notes
 
